@@ -2,8 +2,14 @@
 # | Load balancers |
 # ------------------
 
+resource "random_string" "lb_suffix" {
+  length  = 5
+  special = false
+  upper   = false
+}
+
 resource "aws_s3_bucket" "lb_logs" {
-  bucket = "${var.project}-lb-logs-bucket"
+  bucket = "${var.project}-lb-logs-bucket-${random_string.lb_suffix.result}"
   acl    = "private"
 
   tags = {
@@ -18,7 +24,7 @@ resource "aws_s3_bucket" "lb_logs" {
 ##
 
 resource "aws_alb" "alb_external" {
-  name            = "alb-external"
+  name            = "alb-external-${random_string.lb_suffix.result}"
   internal        = false
   security_groups = var.external_lb_sg_ids
   subnets         = [var.public_subnet_id, var.public2_subnet_id]
@@ -45,7 +51,7 @@ resource "aws_alb" "alb_external" {
 }
 
 resource "aws_alb_target_group" "alb_tg_external" {
-  name     = "alb-tg-external"
+  name     = "alb-tg-external-${random_string.lb_suffix.result}"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
@@ -132,7 +138,7 @@ resource "aws_alb" "alb_internal" {
 }
 
 resource "aws_alb_target_group" "alb_tg_internal" {
-  name     = "alb-tg-internal"
+  name     = "alb-tg-internal-${random_string.lb_suffix.result}"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
