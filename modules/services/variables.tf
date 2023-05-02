@@ -143,7 +143,7 @@ variable "redis_engine_version" {
 #######################
 variable "mq_engine_version" {
   type    = string
-  default = "3.8.22"
+  default = "3.8.34"
 }
 
 variable "rabbitmq_username" {

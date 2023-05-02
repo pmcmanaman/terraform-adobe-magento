@@ -48,11 +48,8 @@ resource "aws_db_instance" "magento_db" {
     Terraform = true
   }
 
-  lifecycle {
-    ignore_changes = [
-      latest_restorable_time
-    ]
-  }
+  # Note: do not add `latest_restorable_time` to `ignore_changes`
+  # https://github.com/terraform-aws-modules/terraform-aws-rds/issues/478
 }
 
 resource "aws_ssm_parameter" "magento_database_password" {
