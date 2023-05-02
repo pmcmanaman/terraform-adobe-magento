@@ -27,6 +27,10 @@ resource "aws_mq_broker" "rabbit_mq" {
     password = random_string.mq_password.result
   }
 
+  lifecycle {
+    ignore_changes = [engine_version]
+  }
+
   tags = {
     Terraform = true
   }
