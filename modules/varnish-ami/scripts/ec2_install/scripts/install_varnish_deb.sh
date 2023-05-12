@@ -1,9 +1,9 @@
 #!/bin/bash
 BASEDIR=$1
 
-curl -L https://packagecloud.io/varnishcache/varnish65/gpgkey | sudo apt-key add -
-echo "deb https://packagecloud.io/varnishcache/varnish65/debian/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/varnishcache_varnish65.list
-echo "deb-src https://packagecloud.io/varnishcache/varnish65/debian/ $(lsb_release -cs) main" >> /etc/apt/sources.list.d/varnishcache_varnish65.list
+curl -L https://packagecloud.io/varnishcache/varnish71/gpgkey | sudo apt-key add -
+echo "deb https://packagecloud.io/varnishcache/varnish71/debian/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/varnishcache_varnish71.list
+echo "deb-src https://packagecloud.io/varnishcache/varnish71/debian/ $(lsb_release -cs) main" >> /etc/apt/sources.list.d/varnishcache_varnish71.list
 
 sudo apt update
 sudo apt -y install varnish
