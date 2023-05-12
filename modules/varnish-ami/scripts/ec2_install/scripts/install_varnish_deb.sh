@@ -1,13 +1,14 @@
 #!/bin/bash
 BASEDIR=$1
 
-curl -L https://packagecloud.io/varnishcache/varnish71/gpgkey | sudo apt-key add -
-echo "deb https://packagecloud.io/varnishcache/varnish71/debian/ $(lsb_release -cs) main" > /etc/apt/sources.list.d/varnishcache_varnish71.list
-echo "deb-src https://packagecloud.io/varnishcache/varnish71/debian/ $(lsb_release -cs) main" >> /etc/apt/sources.list.d/varnishcache_varnish71.list
+curl -s https://packagecloud.io/install/repositories/varnishcache/varnish71/script.deb.sh | sudo bash
 
 sudo apt update
 sudo apt -y install varnish
 sudo systemctl enable varnish
+
+sudo sed -ie "/http2\|pid/d" /usr/lib/systemd/system/varnish.service
+sudo systemctl daemon-reload
 
 sudo rm /etc/varnish/default.vcl
 sudo mv $BASEDIR/configs/backends.vcl /etc/varnish/
